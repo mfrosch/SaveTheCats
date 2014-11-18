@@ -64,3 +64,14 @@ body {
     position: absolute;
     width: 10%;
 }
+
+.control {
+    height: 100%;
+    position: absolute;
+    width: 50%;
+    z-index: 9;
+}
+
+#right.control {
+    right: 0;
+}
