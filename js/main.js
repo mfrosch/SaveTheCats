@@ -23,11 +23,11 @@ jQuery( document ).ready(function($) {
 	    e.preventDefault(); // prevent the default action (scroll / move caret)
 	});
 	
-	$( document ).on( "click", ".control#right", function() {
+	$( document ).on( "touchstart", ".control#right", function() {
 		moveCatcher('right');
 	});
 	
-	$( document ).on( "click", ".control#left", function() {
+	$( document ).on( "touchstart", ".control#left", function() {
 		moveCatcher('left');
 	});
 	
