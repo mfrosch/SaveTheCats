@@ -62,6 +62,11 @@ jQuery( document ).ready(function($) {
 	
 });
 
+function onLoad()
+{
+      document.addEventListener("deviceready", onDeviceReady, true);
+}
+
 function addCats(initduration, reduce) {
 	
     var timestamp = new Date().getTime();
