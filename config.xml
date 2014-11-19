@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "trust-design.net.savethecats"
+        versionCode = "10"
+        version     = "0.1">
+ 
+    <name>Save the Cats</name>
+ 
+    <description>
+        Save the Cats Game
+    </description>
+ 
+    <author href="http://www.trust-design.net" email="m.froschmeier@trust-design.net">
+        Matthias Froschmeier
+    </author>
+ 
+</widget>
