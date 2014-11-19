@@ -31,6 +31,10 @@ jQuery( document ).ready(function($) {
 		moveCatcher('left');
 	});
 	
+	$( document ).on( "click", "#menu .start", function() {
+		$('.overlay').fadeOut();
+	});
+	
 	function moveCatcher(direction) 
 	{
 		var catcherwidth = parseInt($('#catcher').css('width'));

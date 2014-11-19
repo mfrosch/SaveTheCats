@@ -75,3 +75,29 @@ body {
 #right.control {
     right: 0;
 }
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+}
+
+ul#menu {
+    margin-left: 25%;
+    padding-top: 10%;
+    text-align: center;
+    width: 50%;
+}
+
+ul#menu li {
+    font-size: 2em;
+    padding-bottom: 1em;
+}
+
+ul#menu a {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
