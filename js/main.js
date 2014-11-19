@@ -40,10 +40,7 @@ jQuery( document ).ready(function($) {
 	});
 	
 	$( document ).on( "click", "#menu .exit", function() {
-		if (navigator.app != undefined)
-		{
-			navigator.app.exitApp();	
-		}
+		navigator.app.exitApp();	
 	});
 	/* END MENU ACTIONS */
 
