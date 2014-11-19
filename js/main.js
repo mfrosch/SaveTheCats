@@ -39,9 +39,12 @@ jQuery( document ).ready(function($) {
 		$('body').trigger( "startGame" );
 	});
 	
-	$( document ).on( "click", "#menu .exit", function() {
-		navigator.app.exitApp();	
-	});
+//	$( document ).on( "click", "#menu .exit", function() {
+//		if (navigator.app != undefined)
+//		{
+//			navigator.app.exitApp();	
+//		}
+//	});
 	/* END MENU ACTIONS */
 
 	/* GAME START */
@@ -61,11 +64,6 @@ jQuery( document ).ready(function($) {
 	
 	
 });
-
-function onLoad()
-{
-      document.addEventListener("deviceready", onDeviceReady, true);
-}
 
 function addCats(initduration, reduce) {
 	
