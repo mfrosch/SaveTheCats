@@ -101,3 +101,34 @@ ul#menu a {
     display: block;
     width: 100%;
 }
+
+#roof .cat {
+    display: block;
+    height: 5%;
+    position: absolute;
+    width: 5%;
+}
+
+#roof .cat.pos1 {
+	left: 10%;	
+}
+
+
+#roof .cat.pos2 {
+	left: 30%;	
+}
+
+
+#roof .cat.pos3 {
+	left: 50%;	
+}
+
+
+#roof .cat.pos4 {
+	left: 70%;
+}
+
+
+#roof .cat.pos5 {
+	left: 90%;	
+}
