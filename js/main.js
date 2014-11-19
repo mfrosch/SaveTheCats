@@ -35,6 +35,13 @@ jQuery( document ).ready(function($) {
 		$('.overlay').fadeOut();
 	});
 	
+	$( document ).on( "click", "#menu .exit", function() {
+		if (navigator.app != undefined)
+		{
+			navigator.app.exitApp();	
+		}
+	});
+	
 	function moveCatcher(direction) 
 	{
 		var catcherwidth = parseInt($('#catcher').css('width'));
