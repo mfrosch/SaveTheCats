@@ -1,113 +1,42 @@
 jQuery( document ).ready(function($) {
 	
-	/* CONTROL */
-	/* Keyboard */
-	$(document).keydown(function(e)	{	
-	    switch(e.which) 
-	    {
-	        case 37: // left
-	        	moveCatcher('left');
-	        break;
+    var PLAYGROUND_WIDTH	= '500';
+    var PLAYGROUND_HEIGHT	= '500';
+	
+	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH})
+		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
+//		.addGroup("cats", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+//		.addGroup("catcher", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+//		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
 
-	        case 38: // up
-	        break;
-
-	        case 39: // right
-	        	moveCatcher('right');
-	        break;
-
-	        case 40: // down
-	        break;
-
-	        default: return; // exit this handler for other keys
-	    }
-	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	var bgHouse = new $.gQ.Animation({imageURL: "img/house.png"});
+	var bgFire1 = new $.gQ.Animation({imageURL: "img/fire1.png"});
+	var bgFire2 = new $.gQ.Animation({imageURL: "img/fire2.png"});
+	var bgFireSprite = new $.gQ.Animation({
+				imageURL: "img/firesprite.png",
+				numberOfFrame: 2,
+				delta: 500,
+				rate: 100,
+				type: $.gQ.ANIMATION_VERTICAL
 	});
-	
-	/* Touch */
-	$( document ).on( "touchstart", ".control#right", function() {
-		moveCatcher('right');
-	});
-	
-	$( document ).on( "touchstart", ".control#left", function() {
-		moveCatcher('left');
-	});
-	/* END CONTROL */
-	
-	/* MENU ACTIONS */
-	$( document ).on( "click", "#menu .start", function() {
-		$('body').trigger( "startGame" );
-	});
-	
-//	$( document ).on( "click", "#menu .exit", function() {
-//		if (navigator.app != undefined)
-//		{
-//			navigator.app.exitApp();	
-//		}
-//	});
-	/* END MENU ACTIONS */
 
-	/* GAME START */
-	$( document ).on( "startGame", "body", function() {
-		$('.overlay').fadeOut();
-		
-		addCats(1000, 200);
-	});	
-	/* END GAME START */
-	
-	$( document ).on( "catAdded", ".cat", function(e) {
-		
-		var cat = e.currentTarget;
-		
-		catJump(cat);
-	});		
-	
-	
+    $("#background").addSprite("bgHouse", {animation: bgHouse,
+                width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
+
+    $("#fire").addSprite("bgFire1", {animation: bgFireSprite,
+        width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});  
+    
+//    $.playground().registerCallback(function(){
+//        //Offset all the pane:
+//        var newPos = (parseInt($("#fire").css("left")) - smallStarSpeed - PLAYGROUND_WIDTH)
+//        % (-2 * PLAYGROUND_WIDTH) + PLAYGROUND_WIDTH;
+//       $("#fire").css("left", newPos);
+//     }, 50);
+    
+    $.playground().startGame(function(){ });    
+    
 });
-
-function addCats(initduration, reduce) {
-	
-    var timestamp = new Date().getTime();
-	waitForFinalEvent(function(){
-		
-		addCat();
-		
-		var newduration = initduration - reduce;
-		if (newduration <= 0)
-		{
-			// for dev
-			return true;
-			
-			newduration = initduration;	
-		}
-		addCats(newduration, reduce);	
-		
-	}, initduration, timestamp);	
-}
-
-function addCat() {
-	var position = Math.floor((Math.random() * 5) + 1);
-	
-	var timestamp = new Date().getTime();
-	
-	$('#roof').append('<div class="cat pos' + position + ' onroof ' + timestamp + '">CAT</div>');
-	
-	$('.cat.' + timestamp).trigger( "catAdded" );
-}
-
-function catJump(cat) {
-    var timestamp = new Date().getTime();
-    
-//    console.log('init');
-//    console.log(cat);
-    
-	waitForFinalEvent(function(){
-//		console.log('exec');
-//		console.log(cat);
-		cat.remove();
-		
-	}, 2000, timestamp);		
-}
 
 function moveCatcher(direction) {
 	
@@ -136,16 +65,3 @@ function moveCatcher(direction) {
 		}		
 	}
 }
-
-var waitForFinalEvent = (function() {
-	var timers = {};
-	return function(callback, ms, uniqueId) {
-		if (!uniqueId) {
-			uniqueId = "Don't call this twice without a uniqueId";
-		}
-		if (timers[uniqueId]) {
-			clearTimeout(timers[uniqueId]);
-		}
-		timers[uniqueId] = setTimeout(callback, ms);
-	};
-})();

@@ -53,3 +53,82 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#catcher {
+    background-color: black;
+    bottom: 5%;
+    font-size: 10em;
+    height: 1%;
+    left: 50%;
+    margin-left: -5%;
+    position: absolute;
+    width: 10%;
+}
+
+.control {
+    height: 100%;
+    position: absolute;
+    width: 50%;
+    z-index: 9;
+}
+
+#right.control {
+    right: 0;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+}
+
+ul#menu {
+    margin-left: 25%;
+    padding-top: 10%;
+    text-align: center;
+    width: 50%;
+}
+
+ul#menu li {
+    font-size: 2em;
+    padding-bottom: 1em;
+}
+
+ul#menu a {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
+
+#roof .cat {
+    display: block;
+    height: 5%;
+    position: absolute;
+    width: 5%;
+}
+
+#roof .cat.pos1 {
+	left: 10%;	
+}
+
+
+#roof .cat.pos2 {
+	left: 30%;	
+}
+
+
+#roof .cat.pos3 {
+	left: 50%;	
+}
+
+
+#roof .cat.pos4 {
+	left: 70%;
+}
+
+
+#roof .cat.pos5 {
+	left: 90%;	
+}
