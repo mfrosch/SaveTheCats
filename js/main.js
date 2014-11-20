@@ -155,7 +155,7 @@ jQuery( document ).ready(function($) {
             $("#"+name).addClass("cat");
             $("#"+name).addClass("onroof");
             $("#"+name)[0].cat = new Cat($("#"+name));
-            gameOver = true; // DEV
+//            gameOver = true; // DEV
         }
       }, 1000);     
     
@@ -166,6 +166,12 @@ jQuery( document ).ready(function($) {
           $(".cat").each(function(){
             this.cat.update();
 
+            var posy = parseInt($(this).css("top"));
+            if((posy - PLAYGROUND_HEIGHT) > 0){
+              $(this).remove();
+              return;
+            }            
+            
             //Test for collisions
 //            var collided = $(this).collision("#playerBody,.group");
 //            if(collided.length > 0){
