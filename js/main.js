@@ -228,9 +228,11 @@ jQuery( document ).ready(function($) {
 	    {
 	        case 65: // left
 	        	moveCatcher('left');
+	        	$('#playground').css('border', '5px solid red');
 	        break;
 	        case 68: // right
 	        	moveCatcher('right');
+	        	$('#playground').css('border', '5px solid red');
 	        break;
 	        default: return; // exit this handler for other keys
 	    }
@@ -239,10 +241,12 @@ jQuery( document ).ready(function($) {
 	
 	/* Touch */
 	$( document ).on( "touchstart", "#controlright", function() {
+		$('#playground').css('border', '5px solid red');
 		moveCatcher('right');
 	});
 	
 	$( document ).on( "touchstart", "#controlleft", function() {
+		$('#playground').css('border', '5px solid red');
 		moveCatcher('left');
 	});	
     
@@ -252,7 +256,6 @@ jQuery( document ).ready(function($) {
 });
 
 function moveCatcher(direction) {
-	
 	var catcherwidth = parseInt($('#catcher').css('width'));
 	var currentleft = matrixToArray($('#catcher').css('transform'))[4];
 	var parentwidth = parseInt($('#playground').css('width'));
