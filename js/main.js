@@ -134,8 +134,9 @@ jQuery( document ).ready(function($) {
     		}
         	else
     		{
-              var newpos = parseInt(this.node.css("top")) + 5;
-              this.node.css("top",""+newpos+"px");        		
+//              var newpos = parseInt(this.node.css("top")) + 5;
+//              this.node.css("top",""+newpos+"px");
+              this.node.y(5, true);        		
     		}
         	
         };	
