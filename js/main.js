@@ -6,21 +6,26 @@ jQuery( document ).ready(function($) {
 //    var PLAYGROUND_WIDTH	= $(window).width();
 //    var PLAYGROUND_HEIGHT	= $(window).height();    
 	
+    // add stage
 	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH, keyTracker: true})
 		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:480}).end();
-//		.addGroup("cats", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-//		.addGroup("catcher", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-//		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
-
-	var deadline = new $.gQ.Animation({});
-    $("#catsdeadline").addSprite("deadline", {animation: bgHouse,
-        width: PLAYGROUND_WIDTH, height: 20});	
+		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:PLAYGROUND_HEIGHT - 20}).end()
+		.addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
 	
+	// gui - score
+	$("#gui").append("<div id='score'></div>");	
+
+	// deadend for cats
+    $("#catsdeadline").addSprite("deadline", {width: PLAYGROUND_WIDTH, height: 20});
+    
+    // controls
+    $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT});
+    $("#controls").addSprite("controlleft", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
+	
+    // bacgrkound sprites
 	var bgHouse = new $.gQ.Animation({imageURL: "img/house.png"});
-//	var bgFire1 = new $.gQ.Animation({imageURL: "img/fire1.png"});
-//	var bgFire2 = new $.gQ.Animation({imageURL: "img/fire2.png"});
 	var bgFireSprite = new $.gQ.Animation({
 				imageURL: "img/firesprite.png",
 				numberOfFrame: 2,
@@ -35,6 +40,7 @@ jQuery( document ).ready(function($) {
     $("#fire").addSprite("bgFire1", {animation: bgFireSprite,
         width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});  
     
+    // catcher animations
     var catcherAnimation = new Array(3);
     catcherAnimation["idle"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_idle.png"});
     catcherAnimation["left"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_left.png",
@@ -45,56 +51,53 @@ jQuery( document ).ready(function($) {
 	        type: $.gameQuery.ANIMATION_VERTICAL});
 	
 	
-    // Initialize the background
+    // catcher sprites
     $.playground().addGroup("actors", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT})
-            .addGroup("catcher", {posx: PLAYGROUND_WIDTH/2, posy: PLAYGROUND_HEIGHT - 54,
-                  width: 90, height: 54})
-              .addSprite("catcheridle", {animation: catcherAnimation["idle"], 
-                  width: 78, height: 51})
-              .addSprite("catcherleft",{width: 73, height: 54})
-              .addSprite("catcherright", {width: 90, height: 50});
+    				.addGroup("catcher", {posx: PLAYGROUND_WIDTH/2 - 45, posy: PLAYGROUND_HEIGHT - 54, width: 90, height: 54})
+    					.addSprite("catcheridle", {animation: catcherAnimation["idle"], width: 78, height: 51})
+						.addSprite("catcherleft",{width: 73, height: 54})
+						.addSprite("catcherright", {width: 90, height: 50});
 	
-	
+    $("#catcheridle")[0].catcher = new Catcher($("#catcheridle"));
+    
+	// catcher sprite animations switch
     $(document).keydown(function(e){
-        switch(e.keyCode){
-          case 65: //this is left! (a)
-        	  $("#catcheridle").setAnimation();
-            $("#catcherleft").setAnimation(catcherAnimation["left"]);
-            
+    	switch(e.keyCode){
+    		case 65: //this is left! (a)
+    			$("#catcheridle").setAnimation();
+    			$("#catcherleft").setAnimation(catcherAnimation["left"]);
             break;
-          case 68: //this is right (d)
-        	  $("#catcheridle").setAnimation();
-            $("#catcherright").setAnimation(catcherAnimation["right"]);
+    		case 68: //this is right (d)
+    			$("#catcheridle").setAnimation();
+    			$("#catcherright").setAnimation(catcherAnimation["right"]);
             break;
         }
       });
-      //this is where the keybinding occurs
-      $(document).keyup(function(e){
-        switch(e.keyCode){
-          case 65: //this is left! (a)
-            $("#catcherleft").setAnimation();
-            $("#catcheridle").setAnimation(catcherAnimation["idle"]);
+    //this is where the keybinding occurs
+    $(document).keyup(function(e){
+    	switch(e.keyCode){
+    		case 65: //this is left! (a)
+				$("#catcherleft").setAnimation();
+          		$("#catcheridle").setAnimation(catcherAnimation["idle"]);
+      		break;
+    		case 68: //this is right (d)
+    			$("#catcherright").setAnimation();
+    			$("#catcheridle").setAnimation(catcherAnimation["idle"]);
             break;
-          case 68: //this is right (d)
-        	  $("#catcherright").setAnimation();
-        	  $("#catcheridle").setAnimation(catcherAnimation["idle"]);
-            break;
-        }
-      });	
+    	}
+    });	
     
+    // cats sprites
     var cats = new Array(1); // for beginning only one cat type
     cats[0] = new Array();
     cats[0]["onroof"]	= new $.gQ.Animation({imageURL: "img/cat_onroof.png", numberOfFrame: 2,
-        delta: 92, rate: 60, type: $.gQ.ANIMATION_VERTICAL});
+    	delta: 92, rate: 60, type: $.gQ.ANIMATION_VERTICAL});
     cats[0]["jump"]	= new $.gQ.Animation({imageURL: "img/cat_jump.png", numberOfFrame: 2,
-        delta: 80, rate: 60, type: $.gQ.ANIMATION_ONCE | $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});
+    	delta: 80, rate: 60, type: $.gQ.ANIMATION_ONCE | $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});
     cats[0]["fall"]	= new $.gQ.Animation({imageURL: "img/cat_fall.png", numberOfFrame: 2,
-        delta: 104, rate: 60, type: $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});    
+    	delta: 104, rate: 60, type: $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});    
     
-    
-    
-    
-    
+    // catcher class
     function Catcher(node) {
 
     	this.node = node;
@@ -102,10 +105,12 @@ jQuery( document ).ready(function($) {
          
         this.catcatch = function() {
     	   this.catches++;
+    	   $('#score').html('' + this.catches);
     	   return true;
         };
     }
     
+    // cat class
     function Cat(node){
     	
         this.node = $(node);
@@ -163,11 +168,8 @@ jQuery( document ).ready(function($) {
         }
       }, 1000);     
     
-    var score = 0;
-    
-    // move da cats
+    // move cats
     $.playground().registerCallback(function(){
-//    	console.log(gameOver);
         if(!gameOver){
         	
           //Update the movement of the enemies
@@ -185,8 +187,7 @@ jQuery( document ).ready(function($) {
             
             var collided = $(this).collision("#catcheridle,#catcher,#actors");
             if(collided.length > 0){
-            	score++;
-//            	console.log(score);
+            	$('#catcheridle')[0].catcher.catcatch();
             	$(this).remove();
             }
             else
@@ -201,61 +202,83 @@ jQuery( document ).ready(function($) {
         }
       }, 30);    
     
-    $.playground().registerCallback(function()
-	{
-        if(!gameOver)
-        {
-            if(jQuery.gameQuery.keyTracker[65]){ //this is left! (a)
-              var nextpos = parseInt($("#catcher").css("left"))-5;
-              if(nextpos > PLAYGROUND_WIDTH - PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2){
-//                $("#catcher").css("left", ""+nextpos+"px");
-                $("#catcher").x(-5, true);
-              }
-            }
-            if(jQuery.gameQuery.keyTracker[68]){ //this is right! (d)
-              var nextpos = parseInt($("#catcher").css("left"))+5;
-              if(nextpos < PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2 - 90){
-//            	  $("#catcher").css("left", ""+nextpos+"px");
-            	  $("#catcher").x(+5, true);
-              }
-            }
-        }
-	}, 30);
+    // move catcher
+//    $.playground().registerCallback(function()
+//	{
+//        if(!gameOver)
+//        {
+//            if(jQuery.gameQuery.keyTracker[65]){ //this is left! (a)
+//              var nextpos = parseInt($("#catcher").css("left"))-5;
+//              if(nextpos > PLAYGROUND_WIDTH - PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2){
+//                $("#catcher").x(-5, true);
+//              }
+//            }
+//            if(jQuery.gameQuery.keyTracker[68]){ //this is right! (d)
+//              var nextpos = parseInt($("#catcher").css("left"))+5;
+//              if(nextpos < PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2 - 90){
+//            	  $("#catcher").x(+5, true);
+//              }
+//            }
+//        }
+//	}, 30);
     
+	$(document).keydown(function(e)	{
+		
+	    switch(e.which) 
+	    {
+	        case 65: // left
+	        	moveCatcher('left');
+	        break;
+	        case 68: // right
+	        	moveCatcher('right');
+	        break;
+	        default: return; // exit this handler for other keys
+	    }
+	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	});    
+	
+	/* Touch */
+	$( document ).on( "touchstart", "#controlright", function() {
+		moveCatcher('right');
+	});
+	
+	$( document ).on( "touchstart", "#controlleft", function() {
+		moveCatcher('left');
+	});	
     
-    
-    
-    
-    
-    
+    // start Game
     $.playground().startGame(function(){ });    
     
 });
 
-//function moveCatcher(direction) {
-//	
-//	var catcherwidth = parseInt($('#catcher').css('width'));
-//	var currentleft = parseInt($('#catcher').css('left'));
-//	var parentwidth = parseInt($('#wrapper').css('width'));
-//	var steps = 5;
-//	var step = parentwidth / steps;
-//	var maxstep = step*5;
-//	var minstep = step - catcherwidth;
-//	
-//	if (direction == 'right')
-//	{
-//    	var newleft = currentleft + step;
-//    	if (newleft <= maxstep)
-//		{	        	
-//    		$('#catcher').css('left', newleft);
-//		}			
-//	}
-//	else
-//	{
-//    	var newleft = currentleft - step;
-//    	if (newleft >= minstep)
-//		{
-//    		$('#catcher').css('left', newleft);	
-//		}		
-//	}
-//}
+function moveCatcher(direction) {
+	
+	var catcherwidth = parseInt($('#catcher').css('width'));
+	var currentleft = matrixToArray($('#catcher').css('transform'))[4];
+	var parentwidth = parseInt($('#playground').css('width'));
+	var steps = 5;
+	var step = parentwidth / steps;
+	var maxstep = step*5;
+	var minstep = 0;
+	
+	if (direction == 'right')
+	{
+    	var newleft = parseInt(currentleft) + parseInt(step);
+    	if (newleft <= maxstep)
+		{	        	
+    		$('#catcher').x(newleft);
+		}			
+	}
+	else
+	{
+    	var newleft = parseInt(currentleft) - parseInt(step);
+    	if (newleft >= minstep)
+		{
+    		$('#catcher').x(newleft);	
+		}		
+	}
+}
+
+var matrixToArray = function(str){
+    return str.match(/(-?[0-9\.]+)/g);
+};
