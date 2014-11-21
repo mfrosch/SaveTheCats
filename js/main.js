@@ -260,12 +260,29 @@ jQuery( document ).ready(function($) {
 	});	
 	
 	// touch
-	$( document ).on( "touchstart", "#controlright", function() {
+	$( document ).on( "tap", "#controlright", function() {
 		moveCatcher('right');
 	});
-	$( document ).on( "touchstart", "#controlleft", function() {
+	$( document ).on( "tap", "#controlleft", function() {
 		moveCatcher('left');
 	});	
+	
+	$.event.special.tap = {
+			  setup: function() {
+			    var self = this,
+			      $self = $(self);
+
+			    $self.on('touchstart', function(startEvent) {
+			      var target = startEvent.target;
+
+			      $self.one('touchend', function(endEvent) {
+			        if (target == endEvent.target) {
+			          $.event.simulate('tap', self, endEvent);
+			        }
+			      });
+			    });
+			  }
+			};	
     
     // start Game
 	//initialize the start button
@@ -274,7 +291,11 @@ jQuery( document ).ready(function($) {
         $("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});
       });
     })	    
-    $().setLoadBar("loadingBar", 400);
+    
+	$.loadCallback(function(percent){
+		$("#loadBar").width(400*percent);
+		$("#loadtext").html(""+percent+"%")
+	});
     
 });
 
