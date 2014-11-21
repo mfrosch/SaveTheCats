@@ -11,7 +11,7 @@ jQuery( document ).ready(function($) {
 		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:PLAYGROUND_HEIGHT - 20}).end()
-		.addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+//		.addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
 	
 	// gui - score
@@ -19,10 +19,6 @@ jQuery( document ).ready(function($) {
 
 	// deadend for cats
     $("#catsdeadline").addSprite("deadline", {width: PLAYGROUND_WIDTH, height: 20});
-    
-    // controls
-    $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT});
-    $("#controls").addSprite("controlleft", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
 	
     // bacgrkound sprites
 	var bgHouse = new $.gQ.Animation({imageURL: "img/house.png"});
@@ -49,7 +45,6 @@ jQuery( document ).ready(function($) {
 	catcherAnimation["right"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_right.png",
 	        numberOfFrame: 2, delta: 50, rate: 60,
 	        type: $.gameQuery.ANIMATION_VERTICAL});
-	
 	
     // catcher sprites
     $.playground().addGroup("actors", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT})
@@ -239,14 +234,24 @@ jQuery( document ).ready(function($) {
 	    e.preventDefault(); // prevent the default action (scroll / move caret)
 	});    
 	
+	$.playground().addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH});
+
+    // controls
+    $("#controls").addSprite("controlleft", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT});
+    $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
+    
 	/* Touch */
+	$( document ).on( "click", "#controlright", function() {
+		moveCatcher('right');
+	});	
 	$( document ).on( "touchstart", "#controlright", function() {
-		$('#playground').css('border', '5px solid red');
 		moveCatcher('right');
 	});
-	
+
+	$( document ).on( "click", "#controlleft", function() {
+		moveCatcher('left');
+	});	
 	$( document ).on( "touchstart", "#controlleft", function() {
-		$('#playground').css('border', '5px solid red');
 		moveCatcher('left');
 	});	
     
