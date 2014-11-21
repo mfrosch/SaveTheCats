@@ -8,11 +8,16 @@ jQuery( document ).ready(function($) {
 	
 	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH, keyTracker: true})
 		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
+		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:480}).end();
 //		.addGroup("cats", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 //		.addGroup("catcher", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
 //		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
 
+	var deadline = new $.gQ.Animation({});
+    $("#catsdeadline").addSprite("deadline", {animation: bgHouse,
+        width: PLAYGROUND_WIDTH, height: 20});	
+	
 	var bgHouse = new $.gQ.Animation({imageURL: "img/house.png"});
 //	var bgFire1 = new $.gQ.Animation({imageURL: "img/fire1.png"});
 //	var bgFire2 = new $.gQ.Animation({imageURL: "img/fire2.png"});
@@ -134,8 +139,6 @@ jQuery( document ).ready(function($) {
     		}
         	else
     		{
-//              var newpos = parseInt(this.node.css("top")) + 5;
-//              this.node.css("top",""+newpos+"px");
               this.node.y(5, true);        		
     		}
         	
@@ -160,9 +163,13 @@ jQuery( document ).ready(function($) {
         }
       }, 1000);     
     
+    var score = 0;
+    
     // move da cats
     $.playground().registerCallback(function(){
-        if(true || !gameOver){
+//    	console.log(gameOver);
+        if(!gameOver){
+        	
           //Update the movement of the enemies
           $(".cat").each(function(){
             this.cat.update();
@@ -175,44 +182,41 @@ jQuery( document ).ready(function($) {
             
             //Test for collisions
 //            var collided = $(this).collision("#playerBody,.group");
-//            if(collided.length > 0){
-//              if(this.enemy instanceof Bossy){
-//                $(this).setAnimation(enemies[2]["explode"], function(node){$(node).remove();});
-//                $(this).css("width", 150);
-//              } else if(this.enemy instanceof Brainy) {
-//                $(this).setAnimation(enemies[1]["explode"], function(node){$(node).remove();});
-//                $(this).css("width", 150);
-//              } else {
-//                $(this).setAnimation(enemies[0]["explode"], function(node){$(node).remove();});
-//                $(this).css("width", 100);
-//              }
-//              $(this).removeClass("enemy");
-//              //The player has been hit!
-//              if($("#player")[0].player.damage()){
-//                explodePlayer($("#player"));
-//              }
-//            }
+            
+            var collided = $(this).collision("#catcheridle,#catcher,#actors");
+            if(collided.length > 0){
+            	score++;
+//            	console.log(score);
+            	$(this).remove();
+            }
+            else
+        	{
+                var collideddead = $(this).collision("#deadline,#catsdeadline");
+                if(collideddead.length > 0){
+//                	console.log('dead');
+                	gameOver = true;
+                }            	
+        	}
           });
         }
       }, 30);    
     
-    
-    
-    
     $.playground().registerCallback(function()
 	{
-        if(true || !gameOver)
+        if(!gameOver)
         {
             if(jQuery.gameQuery.keyTracker[65]){ //this is left! (a)
               var nextpos = parseInt($("#catcher").css("left"))-5;
               if(nextpos > PLAYGROUND_WIDTH - PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2){
-                $("#catcher").css("left", ""+nextpos+"px");
+//                $("#catcher").css("left", ""+nextpos+"px");
+                $("#catcher").x(-5, true);
               }
             }
             if(jQuery.gameQuery.keyTracker[68]){ //this is right! (d)
               var nextpos = parseInt($("#catcher").css("left"))+5;
               if(nextpos < PLAYGROUND_WIDTH - PLAYGROUND_WIDTH/2 - 90){
-                $("#catcher").css("left", ""+nextpos+"px");
+//            	  $("#catcher").css("left", ""+nextpos+"px");
+            	  $("#catcher").x(+5, true);
               }
             }
         }
@@ -228,30 +232,30 @@ jQuery( document ).ready(function($) {
     
 });
 
-function moveCatcher(direction) {
-	
-	var catcherwidth = parseInt($('#catcher').css('width'));
-	var currentleft = parseInt($('#catcher').css('left'));
-	var parentwidth = parseInt($('#wrapper').css('width'));
-	var steps = 5;
-	var step = parentwidth / steps;
-	var maxstep = step*5;
-	var minstep = step - catcherwidth;
-	
-	if (direction == 'right')
-	{
-    	var newleft = currentleft + step;
-    	if (newleft <= maxstep)
-		{	        	
-    		$('#catcher').css('left', newleft);
-		}			
-	}
-	else
-	{
-    	var newleft = currentleft - step;
-    	if (newleft >= minstep)
-		{
-    		$('#catcher').css('left', newleft);	
-		}		
-	}
-}
+//function moveCatcher(direction) {
+//	
+//	var catcherwidth = parseInt($('#catcher').css('width'));
+//	var currentleft = parseInt($('#catcher').css('left'));
+//	var parentwidth = parseInt($('#wrapper').css('width'));
+//	var steps = 5;
+//	var step = parentwidth / steps;
+//	var maxstep = step*5;
+//	var minstep = step - catcherwidth;
+//	
+//	if (direction == 'right')
+//	{
+//    	var newleft = currentleft + step;
+//    	if (newleft <= maxstep)
+//		{	        	
+//    		$('#catcher').css('left', newleft);
+//		}			
+//	}
+//	else
+//	{
+//    	var newleft = currentleft - step;
+//    	if (newleft >= minstep)
+//		{
+//    		$('#catcher').css('left', newleft);	
+//		}		
+//	}
+//}
