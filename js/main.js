@@ -147,14 +147,27 @@ jQuery( document ).ready(function($) {
     
     var gameOver = false;
     
+    
+    var catid = 0;
     // add cats
     $.playground().registerCallback(function(){
     	
         if(!gameOver){
-            var name = "cat_"+Math.ceil(Math.random()*1000);
+            var name = "cat_"+catid;
+            catid++;
 
+            var newposx = Math.random()*PLAYGROUND_WIDTH;
+            if (newposx < 0)
+        	{
+            	newposx = 0;
+        	}
+            else if (newposx > PLAYGROUND_WIDTH - 92) // 92 cat width
+        	{
+            	newposx = PLAYGROUND_WIDTH - 92;
+        	}
+            
             $("#actors").addSprite(name, {animation: cats[0]["onroof"], 
-                posx: Math.random()*PLAYGROUND_WIDTH, posy: PLAYGROUND_HEIGHT*0.2,
+                posx: newposx, posy: PLAYGROUND_HEIGHT*0.2, // 92 cat width
                 width: 68, height: 92});
             $("#"+name).addClass("cat");
             $("#"+name).addClass("onroof");
@@ -217,17 +230,17 @@ jQuery( document ).ready(function($) {
 //        }
 //	}, 30);
     
+    // CONTROLS
+    // KEYBOARD
 	$(document).keydown(function(e)	{
 		
 	    switch(e.which) 
 	    {
 	        case 65: // left
 	        	moveCatcher('left');
-	        	$('#playground').css('border', '5px solid red');
 	        break;
 	        case 68: // right
 	        	moveCatcher('right');
-	        	$('#playground').css('border', '5px solid red');
 	        break;
 	        default: return; // exit this handler for other keys
 	    }
@@ -235,28 +248,33 @@ jQuery( document ).ready(function($) {
 	});    
 	
 	$.playground().addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH});
-
-    // controls
     $("#controls").addSprite("controlleft", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT});
     $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
     
-	/* Touch */
+	// click
 	$( document ).on( "click", "#controlright", function() {
 		moveCatcher('right');
-	});	
-	$( document ).on( "touchstart", "#controlright", function() {
-		moveCatcher('right');
 	});
-
 	$( document ).on( "click", "#controlleft", function() {
 		moveCatcher('left');
 	});	
+	
+	// touch
+	$( document ).on( "touchstart", "#controlright", function() {
+		moveCatcher('right');
+	});
 	$( document ).on( "touchstart", "#controlleft", function() {
 		moveCatcher('left');
 	});	
     
     // start Game
-    $.playground().startGame(function(){ });    
+	//initialize the start button
+    $("#startbutton").click(function(){
+      $.playground().startGame(function(){
+        $("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});
+      });
+    })	    
+    $().setLoadBar("loadingBar", 400);
     
 });
 

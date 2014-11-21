@@ -53,3 +53,11 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#loadingBar{
+  position: relative;
+  left: 100px; 
+  height: 15px; 
+  width: 0px; 
+  background: red;
+}
