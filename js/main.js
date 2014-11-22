@@ -260,30 +260,13 @@ jQuery( document ).ready(function($) {
 	});	
 	
 	// touch
-	$( document ).on( "tap", "#controlright", function() {
+	$( document ).on( "touchend", "#controlright", function() {
 		moveCatcher('right');
 	});
-	$( document ).on( "tap", "#controlleft", function() {
+	$( document ).on( "touchend", "#controlleft", function() {
 		moveCatcher('left');
-	});	
+	});	 
 	
-	$.event.special.tap = {
-			  setup: function() {
-			    var self = this,
-			      $self = $(self);
-
-			    $self.on('touchstart', function(startEvent) {
-			      var target = startEvent.target;
-			      $.event.simulate('tap', self, endEvent);
-			      $self.one('touchend', function(endEvent) {
-			        if (target == endEvent.target) {
-//			          $.event.simulate('tap', self, endEvent);
-			        }
-			      });
-			    });
-			  }
-			};	
-    
     // start Game
 	//initialize the start button
     $("#startbutton").click(function(){
