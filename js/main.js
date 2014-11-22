@@ -1,18 +1,17 @@
 jQuery( document ).ready(function($) {
 	
-    var PLAYGROUND_WIDTH	= '500';
-    var PLAYGROUND_HEIGHT	= '500';
+//    var PLAYGROUND_WIDTH	= '500';
+//    var PLAYGROUND_HEIGHT	= '500';
     
-//    var PLAYGROUND_WIDTH	= $(window).width();
-//    var PLAYGROUND_HEIGHT	= $(window).height();    
+    var PLAYGROUND_WIDTH	= $(window).width();
+    var PLAYGROUND_HEIGHT	= $(window).height();    
 	
     // add stage
-	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH, keyTracker: true})
-		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
+	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT, keyTracker: true})
+		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end()
+		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end()
 		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:PLAYGROUND_HEIGHT - 20}).end()
-//		.addGroup("controls", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end()
-		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_WIDTH}).end();
+		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end();
 	
 	// gui - score
 	$("#gui").append("<div id='score'></div>");	
@@ -30,18 +29,23 @@ jQuery( document ).ready(function($) {
 				type: $.gQ.ANIMATION_VERTICAL
 	});
 
-    $("#background").addSprite("bgHouse", {animation: bgHouse,
-                width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
+	
+    var HOUSE_WIDTH		= 500;
+    var HOUSE_HEIGHT	= 500; 	
+    var HOUSE_POSX 		= PLAYGROUND_WIDTH / 2 - HOUSE_WIDTH / 2;
+    var HOUSE_POSY		= PLAYGROUND_HEIGHT - HOUSE_HEIGHT;
+    $("#background").addSprite("bgHouse", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgHouse,
+                width: HOUSE_WIDTH, height: HOUSE_HEIGHT});
 
-    $("#fire").addSprite("bgFire1", {animation: bgFireSprite,
-        width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});  
+    $("#fire").addSprite("bgFire1", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgFireSprite,
+        width: HOUSE_WIDTH, height: HOUSE_HEIGHT});  
     
     // catcher animations
     var catcherAnimation = new Array(3);
     catcherAnimation["idle"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_idle.png"});
     catcherAnimation["left"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_left.png",
-        numberOfFrame: 2, delta: 54, rate: 60,
-        type: $.gameQuery.ANIMATION_VERTICAL});
+        	numberOfFrame: 2, delta: 54, rate: 60,
+        	type: $.gameQuery.ANIMATION_VERTICAL});
 	catcherAnimation["right"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_right.png",
 	        numberOfFrame: 2, delta: 50, rate: 60,
 	        type: $.gameQuery.ANIMATION_VERTICAL});
@@ -204,8 +208,8 @@ jQuery( document ).ready(function($) {
                 if(collideddead.length > 0){
 //                	console.log('dead');
                 	gameOver = true;
-            		$('#playground').append('<div id="welcomeScreen"><div id="restart">restart</div></div>');
-            		$('#gQ_scenegraph').remove();
+//            		$('#playground').append('<div id="welcomeScreen"><div id="restart">restart</div></div>');
+//            		$('#gQ_scenegraph').remove();
                 }            	
         	}
           });
