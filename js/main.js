@@ -274,10 +274,10 @@ jQuery( document ).ready(function($) {
 
 			    $self.on('touchstart', function(startEvent) {
 			      var target = startEvent.target;
-
+			      $.event.simulate('tap', self, endEvent);
 			      $self.one('touchend', function(endEvent) {
 			        if (target == endEvent.target) {
-			          $.event.simulate('tap', self, endEvent);
+//			          $.event.simulate('tap', self, endEvent);
 			        }
 			      });
 			    });
