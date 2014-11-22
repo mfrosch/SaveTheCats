@@ -204,11 +204,17 @@ jQuery( document ).ready(function($) {
                 if(collideddead.length > 0){
 //                	console.log('dead');
                 	gameOver = true;
+            		$('#playground').append('<div id="welcomeScreen"><div id="restart">restart</div></div>');
+            		$('#gQ_scenegraph').remove();
                 }            	
         	}
           });
         }
       }, 30);    
+    
+    $( "body" ).on( "click", "#restart", function() {
+    	window.location.reload();
+    });
     
     // move catcher
 //    $.playground().registerCallback(function()
@@ -251,14 +257,8 @@ jQuery( document ).ready(function($) {
     $("#controls").addSprite("controlleft", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT});
     $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
     
-	// click
-//	$( document ).on( "click", "#controlright", function() {
-//		moveCatcher('right');
-//	});
-//	$( document ).on( "click", "#controlleft", function() {
-//		moveCatcher('left');
-//	});	
-	
+	// NO ! click - NO !! if you add touch AND click it will count twice for mobile !
+    
 	// touch
 	$( document ).on( "touchstart", "#controlright", function() {
 		moveCatcher('right');
