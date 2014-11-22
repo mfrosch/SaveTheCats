@@ -252,18 +252,18 @@ jQuery( document ).ready(function($) {
     $("#controls").addSprite("controlright", {width: PLAYGROUND_WIDTH/2, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH/2});
     
 	// click
-	$( document ).on( "click", "#controlright", function() {
-		moveCatcher('right');
-	});
-	$( document ).on( "click", "#controlleft", function() {
-		moveCatcher('left');
-	});	
+//	$( document ).on( "click", "#controlright", function() {
+//		moveCatcher('right');
+//	});
+//	$( document ).on( "click", "#controlleft", function() {
+//		moveCatcher('left');
+//	});	
 	
 	// touch
-	$( document ).on( "touchend", "#controlright", function() {
+	$( document ).on( "touchstart", "#controlright", function() {
 		moveCatcher('right');
 	});
-	$( document ).on( "touchend", "#controlleft", function() {
+	$( document ).on( "touchstart", "#controlleft", function() {
 		moveCatcher('left');
 	});	 
 	
