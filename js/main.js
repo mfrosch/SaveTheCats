@@ -20,7 +20,7 @@ jQuery( document ).ready(function($) {
     $("#catsdeadline").addSprite("deadline", {width: PLAYGROUND_WIDTH, height: 20});
 	
     // bacgrkound sprites
-	var bgHouse = new $.gQ.Animation({imageURL: "img/house.png"});
+	var bgHouse = new $.gQ.Animation({imageURL: "img/saveArea32.svg"});
 	var bgFireSprite = new $.gQ.Animation({
 				imageURL: "img/firesprite.png",
 				numberOfFrame: 2,
@@ -28,14 +28,15 @@ jQuery( document ).ready(function($) {
 				rate: 100,
 				type: $.gQ.ANIMATION_VERTICAL
 	});
-
 	
-    var HOUSE_WIDTH		= 500;
-    var HOUSE_HEIGHT	= 500; 	
+    var HOUSE_WIDTH		= PLAYGROUND_HEIGHT * 1.5; // the house has a aspect ratio of 3:2
+    var HOUSE_HEIGHT	= PLAYGROUND_HEIGHT;     
+    
     var HOUSE_POSX 		= PLAYGROUND_WIDTH / 2 - HOUSE_WIDTH / 2;
     var HOUSE_POSY		= PLAYGROUND_HEIGHT - HOUSE_HEIGHT;
     $("#background").addSprite("bgHouse", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgHouse,
                 width: HOUSE_WIDTH, height: HOUSE_HEIGHT});
+    $('#bgHouse').css('background-size', HOUSE_WIDTH + 'px ' + HOUSE_HEIGHT + 'px');  
 
     $("#fire").addSprite("bgFire1", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgFireSprite,
         width: HOUSE_WIDTH, height: HOUSE_HEIGHT});  
@@ -160,14 +161,14 @@ jQuery( document ).ready(function($) {
             var name = "cat_"+catid;
             catid++;
 
-            var newposx = Math.random()*PLAYGROUND_WIDTH;
+            var newposx = Math.random()*HOUSE_WIDTH;
             if (newposx < 0)
         	{
             	newposx = 0;
         	}
-            else if (newposx > PLAYGROUND_WIDTH - 92) // 92 cat width
+            else if (newposx > HOUSE_WIDTH - 92) // 92 cat width
         	{
-            	newposx = PLAYGROUND_WIDTH - 92;
+            	newposx = HOUSE_WIDTH - 92;
         	}
             
             $("#actors").addSprite(name, {animation: cats[0]["onroof"], 
@@ -289,12 +290,13 @@ jQuery( document ).ready(function($) {
 function moveCatcher(direction) {
 	var catcherwidth = parseInt($('#catcher').css('width'));
 	var currentleft = matrixToArray($('#catcher').css('transform'))[4];
-	var parentwidth = parseInt($('#playground').css('width'));
+//	var parentwidth = parseInt($('#playground').css('width'));
+	var parentwidth = HOUSE_WIDTH;
 	var steps = 5;
 	var step = parentwidth / steps;
 	var maxstep = step*5;
 	var minstep = 0;
-	
+//	console.log(step);
 	if (direction == 'right')
 	{
     	var newleft = parseInt(currentleft) + parseInt(step);
