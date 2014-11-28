@@ -51,12 +51,15 @@ jQuery( document ).ready(function($) {
 	        numberOfFrame: 2, delta: 50, rate: 60,
 	        type: $.gameQuery.ANIMATION_VERTICAL});
 	
+	var STEPS = 5;
+	var STEP = HOUSE_WIDTH / STEPS;	
+	
     // catcher sprites
-    $.playground().addGroup("actors", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT})
-    				.addGroup("catcher", {posx: PLAYGROUND_WIDTH/2 - 45, posy: PLAYGROUND_HEIGHT - 54, width: 90, height: 54})
-    					.addSprite("catcheridle", {animation: catcherAnimation["idle"], width: 78, height: 51})
-						.addSprite("catcherleft",{width: 73, height: 54})
-						.addSprite("catcherright", {width: 90, height: 50});
+    $.playground().addGroup("actors", {width: HOUSE_WIDTH, height: HOUSE_HEIGHT, posx: HOUSE_POSX, posy: HOUSE_POSY})
+    				.addGroup("catcher", {posx: HOUSE_WIDTH/2 - STEP / 2, posy: HOUSE_HEIGHT - 54, width: STEP, height: 54})
+    					.addSprite("catcheridle", {posx: STEP/2 - 78/2, animation: catcherAnimation["idle"], width: 78, height: 51})
+						.addSprite("catcherleft",{posx: STEP/2 - 73/2, width: 73, height: 54})
+						.addSprite("catcherright", {posx: STEP/2 - 90/2, width: 90, height: 50});
 	
     $("#catcheridle")[0].catcher = new Catcher($("#catcheridle"));
     
@@ -102,12 +105,34 @@ jQuery( document ).ready(function($) {
 
     	this.node = node;
         this.catches = 0; 
-         
+        
+    	var maxstep = STEP*4;
+    	var minstep = 0;
+    	
         this.catcatch = function() {
     	   this.catches++;
     	   $('#score').html('' + this.catches);
     	   return true;
         };
+        
+        this.moveright = function() {
+        	currentleft = matrixToArray($('#catcher').css('transform'))[4];
+        	var newleft = parseInt(currentleft) + parseInt(STEP);
+        	
+        	if (newleft <= maxstep)
+    		{	        	
+        		$('#catcher').x(newleft);
+    		}	
+        };
+        
+        this.moveleft = function() {
+        	currentleft = matrixToArray($('#catcher').css('transform'))[4];
+        	var newleft = parseInt(currentleft) - parseInt(STEP);
+        	if (newleft >= minstep)
+    		{
+        		$('#catcher').x(newleft);	
+    		}	
+        };      
     }
     
     // cat class
@@ -248,10 +273,12 @@ jQuery( document ).ready(function($) {
 	    switch(e.which) 
 	    {
 	        case 65: // left
-	        	moveCatcher('left');
+//	        	moveCatcher('left');
+	        	$('#catcheridle')[0].catcher.moveleft();
 	        break;
 	        case 68: // right
-	        	moveCatcher('right');
+//	        	moveCatcher('right');
+	        	$('#catcheridle')[0].catcher.moveright();
 	        break;
 	        default: return; // exit this handler for other keys
 	    }
@@ -266,10 +293,12 @@ jQuery( document ).ready(function($) {
     
 	// touch
 	$( document ).on( "touchstart", "#controlright", function() {
-		moveCatcher('right');
+//		moveCatcher('right');
+		$('#catcheridle')[0].catcher.moveright();
 	});
 	$( document ).on( "touchstart", "#controlleft", function() {
-		moveCatcher('left');
+//		moveCatcher('left');
+		$('#catcheridle')[0].catcher.moveleft();
 	});	 
 	
     // start Game
@@ -286,12 +315,12 @@ jQuery( document ).ready(function($) {
 	});
     
 });
-
+/*
 function moveCatcher(direction) {
 	var catcherwidth = parseInt($('#catcher').css('width'));
 	var currentleft = matrixToArray($('#catcher').css('transform'))[4];
-//	var parentwidth = parseInt($('#playground').css('width'));
-	var parentwidth = HOUSE_WIDTH;
+	var parentwidth = parseInt($('#playground').css('width'));
+//	var parentwidth = HOUSE_WIDTH;
 	var steps = 5;
 	var step = parentwidth / steps;
 	var maxstep = step*5;
@@ -314,6 +343,7 @@ function moveCatcher(direction) {
 		}		
 	}
 }
+*/
 
 var matrixToArray = function(str){
     return str.match(/(-?[0-9\.]+)/g);
