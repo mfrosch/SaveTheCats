@@ -234,8 +234,8 @@ jQuery( document ).ready(function($) {
                 if(collideddead.length > 0){
 //                	console.log('dead');
                 	gameOver = true;
-//            		$('#playground').append('<div id="welcomeScreen"><div id="restart">restart</div></div>');
-//            		$('#gQ_scenegraph').remove();
+            		$('#playground').append('<div id="welcomeScreen"><div id="restart">restart</div></div>');
+            		$('#gQ_scenegraph').remove();
                 }            	
         	}
           });
