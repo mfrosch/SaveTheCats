@@ -20,7 +20,7 @@ jQuery( document ).ready(function($) {
     $("#catsdeadline").addSprite("deadline", {width: PLAYGROUND_WIDTH, height: 20});
 	
     // bacgrkound sprites
-	var bgHouse = new $.gQ.Animation({imageURL: "img/saveArea32.svg"});
+	var bgHouse = new $.gQ.Animation({imageURL: "img/housetest3.svg"});
 	var bgFireSprite = new $.gQ.Animation({
 				imageURL: "img/firesprite.png",
 				numberOfFrame: 2,
