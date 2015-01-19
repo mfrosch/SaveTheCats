@@ -9,7 +9,7 @@ jQuery( document ).ready(function($) {
     // add stage
 	$("#playground").playground({width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT, keyTracker: true})
 		.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end()
-		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end()
+//		.addGroup("fire", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end()
 		.addGroup("catsdeadline", {width: PLAYGROUND_WIDTH, height: 20, posy:PLAYGROUND_HEIGHT - 20}).end()
 		.addGroup("gui", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT}).end();
 	
@@ -21,13 +21,13 @@ jQuery( document ).ready(function($) {
 	
     // bacgrkound sprites
 	var bgHouse = new $.gQ.Animation({imageURL: "img/housetest3.svg"});
-	var bgFireSprite = new $.gQ.Animation({
-				imageURL: "img/firesprite.png",
-				numberOfFrame: 2,
-				delta: 500,
-				rate: 100,
-				type: $.gQ.ANIMATION_VERTICAL
-	});
+//	var bgFireSprite = new $.gQ.Animation({
+//				imageURL: "img/firesprite.png",
+//				numberOfFrame: 2,
+//				delta: 500,
+//				rate: 100,
+//				type: $.gQ.ANIMATION_VERTICAL
+//	});
 	
     var HOUSE_WIDTH		= PLAYGROUND_HEIGHT * 1.5; // the house has a aspect ratio of 3:2
     var HOUSE_HEIGHT	= PLAYGROUND_HEIGHT;     
@@ -38,8 +38,8 @@ jQuery( document ).ready(function($) {
                 width: HOUSE_WIDTH, height: HOUSE_HEIGHT});
     $('#bgHouse').css('background-size', HOUSE_WIDTH + 'px ' + HOUSE_HEIGHT + 'px');  
 
-    $("#fire").addSprite("bgFire1", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgFireSprite,
-        width: HOUSE_WIDTH, height: HOUSE_HEIGHT});  
+//    $("#fire").addSprite("bgFire1", {posx: HOUSE_POSX, posy: HOUSE_POSY, animation: bgFireSprite,
+//        width: HOUSE_WIDTH, height: HOUSE_HEIGHT});  
     
     // catcher animations
     var catcherAnimation = new Array(3);
