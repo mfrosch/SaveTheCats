@@ -43,36 +43,38 @@ jQuery( document ).ready(function($) {
     
     // catcher animations
     var catcherAnimation = new Array(3);
-    catcherAnimation["idle"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_idle.png"});
-    catcherAnimation["left"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_left.png",
-        	numberOfFrame: 2, delta: 54, rate: 60,
-        	type: $.gameQuery.ANIMATION_VERTICAL});
-	catcherAnimation["right"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_right.png",
-	        numberOfFrame: 2, delta: 50, rate: 60,
-	        type: $.gameQuery.ANIMATION_VERTICAL});
+    catcherAnimation["idle"] = 	new $.gameQuery.Animation({imageURL: "img/grils.svg"});
+//    catcherAnimation["left"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_left.png",
+//        	numberOfFrame: 2, delta: 54, rate: 60,
+//        	type: $.gameQuery.ANIMATION_VERTICAL});
+//	catcherAnimation["right"] = 	new $.gameQuery.Animation({imageURL: "img/catcher_right.png",
+//	        numberOfFrame: 2, delta: 50, rate: 60,
+//	        type: $.gameQuery.ANIMATION_VERTICAL});
 	
 	var STEPS = 5;
 	var STEP = HOUSE_WIDTH / STEPS;	
-	
+	var catcherWidth = STEP;
+	var catcherHeight = STEP * 0.665; // ascpect ratio ...
     // catcher sprites
     $.playground().addGroup("actors", {width: HOUSE_WIDTH, height: HOUSE_HEIGHT, posx: HOUSE_POSX, posy: HOUSE_POSY})
-    				.addGroup("catcher", {posx: HOUSE_WIDTH/2 - STEP / 2, posy: HOUSE_HEIGHT - 54, width: STEP, height: 54})
-    					.addSprite("catcheridle", {posx: STEP/2 - 78/2, animation: catcherAnimation["idle"], width: 78, height: 51})
-						.addSprite("catcherleft",{posx: STEP/2 - 73/2, width: 73, height: 54})
-						.addSprite("catcherright", {posx: STEP/2 - 90/2, width: 90, height: 50});
+    				.addGroup("catcher", {posx: HOUSE_WIDTH/2 - STEP / 2, posy: HOUSE_HEIGHT - catcherHeight*0.3, width: STEP, height: catcherHeight*0.3})
+    					.addSprite("catcheridle", {posy: -catcherHeight*0.7, animation: catcherAnimation["idle"], width: STEP, height: catcherHeight});
+//						.addSprite("catcherleft",{posx: STEP/2 - 73/2, width: 73, height: 54})
+//						.addSprite("catcherright", {posx: STEP/2 - 90/2, width: 90, height: 50});
 	
     $("#catcheridle")[0].catcher = new Catcher($("#catcheridle"));
     
 	// catcher sprite animations switch
+    /*
     $(document).keydown(function(e){
     	switch(e.keyCode){
     		case 65: //this is left! (a)
-    			$("#catcheridle").setAnimation();
-    			$("#catcherleft").setAnimation(catcherAnimation["left"]);
+//    			$("#catcheridle").setAnimation();
+//    			$("#catcherleft").setAnimation(catcherAnimation["left"]);
             break;
     		case 68: //this is right (d)
-    			$("#catcheridle").setAnimation();
-    			$("#catcherright").setAnimation(catcherAnimation["right"]);
+//    			$("#catcheridle").setAnimation();
+//    			$("#catcherright").setAnimation(catcherAnimation["right"]);
             break;
         }
       });
@@ -80,15 +82,16 @@ jQuery( document ).ready(function($) {
     $(document).keyup(function(e){
     	switch(e.keyCode){
     		case 65: //this is left! (a)
-				$("#catcherleft").setAnimation();
-          		$("#catcheridle").setAnimation(catcherAnimation["idle"]);
+//				$("#catcherleft").setAnimation();
+//          		$("#catcheridle").setAnimation(catcherAnimation["idle"]);
       		break;
     		case 68: //this is right (d)
-    			$("#catcherright").setAnimation();
-    			$("#catcheridle").setAnimation(catcherAnimation["idle"]);
+//    			$("#catcherright").setAnimation();
+//    			$("#catcheridle").setAnimation(catcherAnimation["idle"]);
             break;
     	}
     });	
+    */
     
     // cats sprites
     var cats = new Array(1); // for beginning only one cat type
@@ -210,7 +213,7 @@ jQuery( document ).ready(function($) {
     $.playground().registerCallback(function(){
         if(!gameOver){
         	
-          //Update the movement of the enemies
+          //Update the movement of the cat
           $(".cat").each(function(){
             this.cat.update();
 
@@ -233,9 +236,10 @@ jQuery( document ).ready(function($) {
                 var collideddead = $(this).collision("#deadline,#catsdeadline");
                 if(collideddead.length > 0){
 //                	console.log('dead');
+                	// ONLY FOR DEV REMOVE
                 	gameOver = true;
-            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');
-            		$('#gQ_scenegraph').remove();
+//            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');
+//            		$('#gQ_scenegraph').remove();
                 }            	
         	}
           });
