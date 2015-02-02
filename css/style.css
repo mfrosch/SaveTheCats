@@ -67,6 +67,8 @@ body {
 	background-position: center bottom !important;
 } 
 */
-#catcheridle {
+#catcheridle,
+.gQ_sprite.cat {
     background-size: auto 100%;
 }
+

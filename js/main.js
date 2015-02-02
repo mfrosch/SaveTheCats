@@ -96,11 +96,11 @@ jQuery( document ).ready(function($) {
     // cats sprites
     var cats = new Array(1); // for beginning only one cat type
     cats[0] = new Array();
-    cats[0]["onroof"]	= new $.gQ.Animation({imageURL: "img/cat_onroof.png", numberOfFrame: 2,
+    cats[0]["onroof"]	= new $.gQ.Animation({imageURL: "img/cat.svg", numberOfFrame: 1,
     	delta: 92, rate: 60, type: $.gQ.ANIMATION_VERTICAL});
-    cats[0]["jump"]	= new $.gQ.Animation({imageURL: "img/cat_jump.png", numberOfFrame: 2,
+    cats[0]["jump"]	= new $.gQ.Animation({imageURL: "img/cat.svg", numberOfFrame: 1,
     	delta: 80, rate: 60, type: $.gQ.ANIMATION_ONCE | $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});
-    cats[0]["fall"]	= new $.gQ.Animation({imageURL: "img/cat_fall.png", numberOfFrame: 2,
+    cats[0]["fall"]	= new $.gQ.Animation({imageURL: "img/cat.svg", numberOfFrame: 1,
     	delta: 104, rate: 60, type: $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});    
     
     // catcher class
@@ -198,10 +198,11 @@ jQuery( document ).ready(function($) {
         	{
             	newposx = HOUSE_WIDTH - 92;
         	}
-            
+            var catwidth = HOUSE_WIDTH / 15;
+            var catheight = catwidth * 1.56390977443609;
             $("#actors").addSprite(name, {animation: cats[0]["onroof"], 
                 posx: newposx, posy: PLAYGROUND_HEIGHT*0.2, // 92 cat width
-                width: 68, height: 92});
+                width: catwidth, height: catheight});  
             $("#"+name).addClass("cat");
             $("#"+name).addClass("onroof");
             $("#"+name)[0].cat = new Cat($("#"+name));
@@ -237,9 +238,9 @@ jQuery( document ).ready(function($) {
                 if(collideddead.length > 0){
 //                	console.log('dead');
                 	// ONLY FOR DEV REMOVE
-                	gameOver = true;
-            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');
-            		$('#gQ_scenegraph').remove();
+                	gameOver = true; 
+//            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
+//            		$('#gQ_scenegraph').remove();// DEV
                 }            	
         	}
           });
