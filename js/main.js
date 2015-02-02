@@ -239,8 +239,8 @@ jQuery( document ).ready(function($) {
 //                	console.log('dead');
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
-//            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-//            		$('#gQ_scenegraph').remove();// DEV
+            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
+            		$('#gQ_scenegraph').remove();// DEV
                 }            	
         	}
           });
