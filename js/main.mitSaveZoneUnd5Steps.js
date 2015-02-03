@@ -59,8 +59,8 @@ jQuery( document ).ready(function($) {
 	var catcherWidth = STEP;
 	var catcherHeight = STEP * 0.665; // ascpect ratio ...
     // catcher sprites
-    $.playground().addGroup("actors", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT, posx: 0, posy: 0})
-    				.addGroup("catcher", {posx: PLAYGROUND_WIDTH/2 - STEP / 2, posy: PLAYGROUND_HEIGHT - catcherHeight*0.3, width: catcherWidth, height: catcherHeight*0.3})
+    $.playground().addGroup("actors", {width: HOUSE_WIDTH, height: HOUSE_HEIGHT, posx: HOUSE_POSX, posy: HOUSE_POSY})
+    				.addGroup("catcher", {posx: HOUSE_WIDTH/2 - STEP / 2, posy: HOUSE_HEIGHT - catcherHeight*0.3, width: STEP, height: catcherHeight*0.3})
     					.addSprite("catcheridle", {posy: -catcherHeight*0.7, animation: catcherAnimation["idle"], width: STEP, height: catcherHeight});
 //						.addSprite("catcherleft",{posx: STEP/2 - 73/2, width: 73, height: 54})
 //						.addSprite("catcherright", {posx: STEP/2 - 90/2, width: 90, height: 50});
@@ -141,7 +141,7 @@ jQuery( document ).ready(function($) {
         }; 
         
         this.moveTo = function(newx) {
-        	$('#catcher').x(newx - catcherWidth / 2);		
+        	$('#catcher').x(newx);		
         };      
     }
     
@@ -263,8 +263,8 @@ jQuery( document ).ready(function($) {
 //                	console.log('dead');
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
-            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-            		$('#gQ_scenegraph').remove();// DEV
+//            		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
+//            		$('#gQ_scenegraph').remove();// DEV
                 }            	
         	}
           });
@@ -323,13 +323,13 @@ jQuery( document ).ready(function($) {
 	// touch
     $( document ).on( "touchstart mousedown", "#controls", function(event) {
 //    	console.log(event.clientX);
-    	$('#catcheridle')[0].catcher.moveTo(event.clientX);
+//    	$('#catcheridle')[0].catcher.moveTo(event.clientX);
     });
 //	$( document ).on( "touchstart mousedown", "#controlright", function(event) {
-//		$('#catcheridle')[0].catcher.moveright();
+		$('#catcheridle')[0].catcher.moveright();
 //	});
 //	$( document ).on( "touchstart mousedown", "#controlleft", function(event) {
-//		$('#catcheridle')[0].catcher.moveleft();
+		$('#catcheridle')[0].catcher.moveleft();
 //	});	 
 	
     // start Game

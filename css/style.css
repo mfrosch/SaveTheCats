@@ -72,3 +72,8 @@ body {
     background-size: auto 100%;
 }
 
+#backgroundimg {
+    background-repeat: repeat-x !important;
+    background-size: auto 100%;
+}
+
