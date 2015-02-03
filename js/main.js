@@ -162,7 +162,8 @@ jQuery( document ).ready(function($) {
         this.stayonroof = 1000;
         this.speed = 5;
         this.accl = 0.5;
-        if (catType == 1)
+        this.type = catType
+        if (this.type == 1)
     	{
             this.stayonroof = 800;
             this.speed = 8;
@@ -179,7 +180,7 @@ jQuery( document ).ready(function($) {
     			{
         			$(this.node).removeClass('onroof');
         			$(this.node).addClass('jump');
-        			$(this.node).setAnimation(cats[catType]["jump"]);
+        			$(this.node).setAnimation(cats[this.type]["jump"]);
     			}
     		}
         	else if ($(this.node).hasClass('jump'))
@@ -190,7 +191,7 @@ jQuery( document ).ready(function($) {
     			{
         			$(this.node).removeClass('jump');
         			$(this.node).addClass('fall');       
-        			$(this.node).setAnimation(cats[catType]["fall"]);
+        			$(this.node).setAnimation(cats[this.type]["fall"]);
     			}
     		}
         	else
@@ -273,6 +274,10 @@ jQuery( document ).ready(function($) {
             var collided = $(this).collision("#catcheridle,#catcher,#actors");
             if(collided.length > 0){
             	$('#catcheridle')[0].catcher.catcatch();
+            	if (this.cat.type == 1) // this type get 2 points
+        		{
+            		$('#catcheridle')[0].catcher.catcatch();	
+        		}
             	$(this).remove();
             }
             else
@@ -283,7 +288,7 @@ jQuery( document ).ready(function($) {
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
             		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-//            		$('#gQ_scenegraph').remove();// DEV
+
                 }            	
         	}
           });
