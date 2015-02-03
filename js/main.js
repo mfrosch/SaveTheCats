@@ -324,7 +324,9 @@ jQuery( document ).ready(function($) {
 //    $( document ).on( "touchstart mousedown", "#controls", function(event) { // mousedown slows down on mobile ... only for dev
     $( document ).on( "touchstart", "#controls", function(event) {
 //    	console.log(event.clientX);
+    	$('#score').html('' + event.clientX);
     	$('#catcheridle')[0].catcher.moveTo(event.clientX);
+    	
     });
 //	$( document ).on( "touchstart mousedown", "#controlright", function(event) {
 //		$('#catcheridle')[0].catcher.moveright();
