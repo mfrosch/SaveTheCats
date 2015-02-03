@@ -343,7 +343,7 @@ jQuery( document ).ready(function($) {
     
 	// touch
 //    $( document ).on( "touchstart mousedown", "#controls", function(e) {
-    $( document ).on( "touchmove mousemove", "#controls", function(e) {
+    $( document ).on( "touchstart mousedown touchmove mousemove", "#controls", function(e) {
 //    $( document ).on( "touchmove", "#controls", function(e) { 
 //    	console.log(e);
     	
