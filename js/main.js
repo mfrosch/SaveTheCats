@@ -221,7 +221,7 @@ jQuery( document ).ready(function($) {
             var name = "cat_"+catid;
             catid++;
 
-            var catwidth = HOUSE_WIDTH / 15;
+            var catwidth = Math.round(HOUSE_WIDTH / 15);
             var catheight = catwidth * 1.56390977443609;
             
             var newposx = Math.random()*PLAYGROUND_WIDTH;
@@ -283,7 +283,7 @@ jQuery( document ).ready(function($) {
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
             		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-            		$('#gQ_scenegraph').remove();// DEV
+//            		$('#gQ_scenegraph').remove();// DEV
                 }            	
         	}
           });
@@ -319,19 +319,21 @@ jQuery( document ).ready(function($) {
     // CONTROLS
     // KEYBOARD
 	$(document).keydown(function(e)	{
-		
-	    switch(e.which) 
-	    {
-	        case 65: // left
-//	        	moveCatcher('left');
-	        	$('#catcheridle')[0].catcher.moveleft();
-	        break;
-	        case 68: // right
-//	        	moveCatcher('right');
-	        	$('#catcheridle')[0].catcher.moveright();
-	        break;
-	        default: return; // exit this handler for other keys
-	    }
+		if(!gameOver)
+		{
+		    switch(e.which) 
+		    {
+		        case 65: // left
+	//	        	moveCatcher('left');
+		        	$('#catcheridle')[0].catcher.moveleft();
+		        break;
+		        case 68: // right
+	//	        	moveCatcher('right');
+		        	$('#catcheridle')[0].catcher.moveright();
+		        break;
+		        default: return; // exit this handler for other keys
+		    }
+		}
 	    e.preventDefault(); // prevent the default action (scroll / move caret)
 	});    
 	
@@ -346,23 +348,24 @@ jQuery( document ).ready(function($) {
     $( document ).on( "touchstart mousedown touchmove mousemove", "#controls", function(e) {
 //    $( document ).on( "touchmove", "#controls", function(e) { 
 //    	console.log(e);
-    	
-    	if( navigator.userAgent.match(/Android/i) ) {
-    		e.preventDefault();
-	  	}    	
-    	
-    	// mobile touch
-    	if (e.originalEvent.touches != undefined)
-		{
-    		var xPos = e.originalEvent.touches[0].pageX;	
-		}
-    	else
-		{
-    		var xPos = e.clientX;	
-		}
-    	
-    	$('#catcheridle')[0].catcher.moveTo(xPos);
-    	
+    	if(!gameOver)
+    	{
+	    	if( navigator.userAgent.match(/Android/i) ) {
+	    		e.preventDefault();
+		  	}    	
+	    	
+	    	// mobile touch
+	    	if (e.originalEvent.touches != undefined)
+			{
+	    		var xPos = e.originalEvent.touches[0].pageX;	
+			}
+	    	else
+			{
+	    		var xPos = e.clientX;	
+			}
+	    	
+	    	$('#catcheridle')[0].catcher.moveTo(xPos);
+    	}
     });
 //	$( document ).on( "touchstart mousedown", "#controlright", function(event) {
 //		$('#catcheridle')[0].catcher.moveright();
@@ -370,16 +373,19 @@ jQuery( document ).ready(function($) {
 //	$( document ).on( "touchstart mousedown", "#controlleft", function(event) {
 //		$('#catcheridle')[0].catcher.moveleft();
 //	});	 
-	
+    
+    //fake start - render the background
+    $.playground().startGame(function(){
+    	gameOver = true; 
+    });   	
     // start Game
     function startGame()
     {
-        $.playground().startGame(function(){
-        	if ($("#welcomeScreen")[0])
-    		{
-        		$("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});	
-    		}
-        });    	
+    	if ($("#welcomeScreen")[0])
+		{
+    		$("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});	
+		} 	
+    	gameOver = false; 
     }    
        
     
