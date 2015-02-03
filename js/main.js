@@ -105,6 +105,13 @@ jQuery( document ).ready(function($) {
     	delta: 80, rate: 60, type: $.gQ.ANIMATION_ONCE | $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});
     cats[0]["fall"]	= new $.gQ.Animation({imageURL: "img/cat.svg", numberOfFrame: 1,
     	delta: 104, rate: 60, type: $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});    
+    cats[1] = new Array();
+    cats[1]["onroof"]	= new $.gQ.Animation({imageURL: "img/cat1.svg", numberOfFrame: 1,
+    	delta: 92, rate: 60, type: $.gQ.ANIMATION_VERTICAL});
+    cats[1]["jump"]	= new $.gQ.Animation({imageURL: "img/cat1.svg", numberOfFrame: 1,
+    	delta: 80, rate: 60, type: $.gQ.ANIMATION_ONCE | $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});
+    cats[1]["fall"]	= new $.gQ.Animation({imageURL: "img/cat1.svg", numberOfFrame: 1,
+    	delta: 104, rate: 60, type: $.gQ.ANIMATION_VERTICAL | $.gQ.ANIMATION_CALLBACK});    
     
     // catcher class
     function Catcher(node) {
@@ -146,13 +153,21 @@ jQuery( document ).ready(function($) {
     }
     
     // cat class
-    function Cat(node){
+    function Cat(node, catType){
     	
         this.node = $(node);
-        this.stayonroof = 1000;
         this.alreadystayedonroof = 0;
         this.jumptick = 0;
+        
+        this.stayonroof = 1000;
         this.speed = 5;
+        this.accl = 0.5;
+        if (catType == 1)
+    	{
+            this.stayonroof = 800;
+            this.speed = 8;
+            this.accl = 0.5;        	
+    	}
         
         this.update = function(){
         	
@@ -164,7 +179,7 @@ jQuery( document ).ready(function($) {
     			{
         			$(this.node).removeClass('onroof');
         			$(this.node).addClass('jump');
-        			$(this.node).setAnimation(cats[0]["jump"]);
+        			$(this.node).setAnimation(cats[catType]["jump"]);
     			}
     		}
         	else if ($(this.node).hasClass('jump'))
@@ -175,7 +190,7 @@ jQuery( document ).ready(function($) {
     			{
         			$(this.node).removeClass('jump');
         			$(this.node).addClass('fall');       
-        			$(this.node).setAnimation(cats[0]["fall"]);
+        			$(this.node).setAnimation(cats[catType]["fall"]);
     			}
     		}
         	else
@@ -183,7 +198,7 @@ jQuery( document ).ready(function($) {
         		this.node.y(this.speed, true);
         		
         		// acceleration
-        		this.speed = this.speed + 0.5;
+        		this.speed = this.speed + this.accl;
     		}
         	
         };	
@@ -195,7 +210,7 @@ jQuery( document ).ready(function($) {
     // catInitTick
     var catInitTick = 1000;
     var catTickDecrease = 25;
-    var catTickMin = 100;
+    var catTickMin = 200;
     
     var catid = 0;
 
@@ -206,23 +221,27 @@ jQuery( document ).ready(function($) {
             var name = "cat_"+catid;
             catid++;
 
-            var newposx = Math.random()*HOUSE_WIDTH;
+            var catwidth = HOUSE_WIDTH / 15;
+            var catheight = catwidth * 1.56390977443609;
+            
+            var newposx = Math.random()*PLAYGROUND_WIDTH;
             if (newposx < 0)
         	{
             	newposx = 0;
         	}
-            else if (newposx > HOUSE_WIDTH - 92) // 92 cat width
+            else if (newposx > PLAYGROUND_WIDTH - catwidth) // 92 cat width
         	{
-            	newposx = HOUSE_WIDTH - 92;
-        	}
-            var catwidth = HOUSE_WIDTH / 15;
-            var catheight = catwidth * 1.56390977443609;
-            $("#actors").addSprite(name, {animation: cats[0]["onroof"], 
+            	newposx = PLAYGROUND_WIDTH - catwidth;
+        	}            
+            
+            var catType = Math.round(Math.random()); // 1 or 0
+            
+            $("#actors").addSprite(name, {animation: cats[catType]["onroof"], 
                 posx: newposx, posy: PLAYGROUND_HEIGHT*0.14, // 92 cat width
                 width: catwidth, height: catheight});  
             $("#"+name).addClass("cat");
             $("#"+name).addClass("onroof");
-            $("#"+name)[0].cat = new Cat($("#"+name));
+            $("#"+name)[0].cat = new Cat($("#"+name), catType);
 //            gameOver = true; // DEV
             
             catInitTick = catInitTick - catTickDecrease;
@@ -272,7 +291,9 @@ jQuery( document ).ready(function($) {
       }, 30);    
     
     $( "body" ).on( "click", "#restart", function() {
-    	window.location.reload();
+//    	window.location.reload();
+        var params = ["ac=start"];    	
+    	window.location.href = window.location.host + window.location.pathname + '?' + params.join('&');
     });
     
     // move catcher
@@ -321,13 +342,19 @@ jQuery( document ).ready(function($) {
 	// NO ! click - NO !! if you add touch AND click it will count twice for mobile !
     
 	// touch
-//    $( document ).on( "touchstart mousedown", "#controls", function(event) { // mousedown slows down on mobile ... only for dev
-    $( document ).on( "touchstart", "#controls", function(e) {
-//    	console.log(event.clientX);
-    	var xPos = e.originalEvent.touches[0].pageX;
-    	// desktop
-//    	var xPos = e.clientX;
-    	$('#score').html('' + xPos);
+    $( document ).on( "touchstart mousedown", "#controls", function(e) { 
+//    $( document ).on( "touchstart", "#controls", function(e) {
+//    	console.log(e);
+    	// mobile touch
+    	if (e.originalEvent.touches != undefined)
+		{
+    		var xPos = e.originalEvent.touches[0].pageX;	
+		}
+    	else
+		{
+    		var xPos = e.clientX;	
+		}
+    	
     	$('#catcheridle')[0].catcher.moveTo(xPos);
     	
     });
@@ -339,12 +366,31 @@ jQuery( document ).ready(function($) {
 //	});	 
 	
     // start Game
-	//initialize the start button
-    $("#startbutton").click(function(){
-      $.playground().startGame(function(){
-        $("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});
-      });
-    })	    
+    function startGame()
+    {
+        $.playground().startGame(function(){
+        	if ($("#welcomeScreen")[0])
+    		{
+        		$("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});	
+    		}
+        });    	
+    }    
+       
+    
+    //for reload direct start
+    var action = getQueryVariable('ac');
+    if (action == 'start')
+	{
+    	startGame();
+	}
+    else
+	{
+    	//initialize the start button
+    	$('#welcomeScreen').css('display', 'block');
+        $("#startbutton").click(function(){
+        	startGame();
+        })	     	
+	}
     
 	$.loadCallback(function(percent){
 		$("#loadBar").width(400*percent);
@@ -352,6 +398,20 @@ jQuery( document ).ready(function($) {
 	});
     
 });
+
+function getQueryVariable(variable) {
+	  var query = window.location.search.substring(1);
+	  var vars = query.split("&");
+	  for (var i=0;i<vars.length;i++) {
+	    var pair = vars[i].split("=");
+	    if (pair[0] == variable) {
+	      return pair[1];
+	    }
+	  } 
+	  return '';
+//	  alert('Query Variable ' + variable + ' not found');
+}
+
 /*
 function moveCatcher(direction) {
 	var catcherwidth = parseInt($('#catcher').css('width'));
