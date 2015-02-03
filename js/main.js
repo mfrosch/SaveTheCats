@@ -378,13 +378,15 @@ jQuery( document ).ready(function($) {
     $.playground().startGame(function(){
     	gameOver = true; 
     });   	
-    // start Game
+    
+    // real start Game
     function startGame()
     {
     	if ($("#welcomeScreen")[0])
 		{
     		$("#welcomeScreen").fadeTo(400,0,function(){$(this).remove();});	
 		} 	
+    	$('#score').html('0');
     	gameOver = false; 
     }    
        
