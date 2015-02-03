@@ -321,7 +321,8 @@ jQuery( document ).ready(function($) {
 	// NO ! click - NO !! if you add touch AND click it will count twice for mobile !
     
 	// touch
-    $( document ).on( "touchstart mousedown", "#controls", function(event) {
+//    $( document ).on( "touchstart mousedown", "#controls", function(event) { // mousedown slows down on mobile ... only for dev
+    $( document ).on( "touchstart", "#controls", function(event) {
 //    	console.log(event.clientX);
     	$('#catcheridle')[0].catcher.moveTo(event.clientX);
     });
