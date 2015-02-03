@@ -343,7 +343,8 @@ jQuery( document ).ready(function($) {
     
 	// touch
 //    $( document ).on( "touchstart mousedown", "#controls", function(e) {
-    $( document ).on( "touchmove mousemove", "#controls", function(e) { 
+//    $( document ).on( "touchmove mousemove", "#controls", function(e) {
+    $( document ).on( "touchmove", "#controls", function(e) { 
 //    	console.log(e);
     	// mobile touch
     	if (e.originalEvent.touches != undefined)
