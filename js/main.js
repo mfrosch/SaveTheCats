@@ -341,11 +341,15 @@ jQuery( document ).ready(function($) {
     
 	// NO ! click - NO !! if you add touch AND click it will count twice for mobile !
     
+    var counter = 1;
 	// touch
 //    $( document ).on( "touchstart mousedown", "#controls", function(e) {
-//    $( document ).on( "touchmove mousemove", "#controls", function(e) {
-    $( document ).on( "touchmove", "#controls", function(e) { 
+    $( document ).on( "touchmove mousemove", "#controls", function(e) {
+//    $( document ).on( "touchmove", "#controls", function(e) { 
 //    	console.log(e);
+    	
+    	$('#score').html('' + counter);
+    	counter++;
     	// mobile touch
     	if (e.originalEvent.touches != undefined)
 		{
