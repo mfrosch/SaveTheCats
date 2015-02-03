@@ -322,10 +322,13 @@ jQuery( document ).ready(function($) {
     
 	// touch
 //    $( document ).on( "touchstart mousedown", "#controls", function(event) { // mousedown slows down on mobile ... only for dev
-    $( document ).on( "touchstart", "#controls", function(event) {
+    $( document ).on( "touchstart", "#controls", function(e) {
 //    	console.log(event.clientX);
-    	$('#score').html('' + event.clientX);
-    	$('#catcheridle')[0].catcher.moveTo(event.clientX);
+    	var xPos = e.originalEvent.touches[0].pageX;
+    	// desktop
+//    	var xPos = e.clientX;
+    	$('#score').html('' + xPos);
+    	$('#catcheridle')[0].catcher.moveTo(xPos);
     	
     });
 //	$( document ).on( "touchstart mousedown", "#controlright", function(event) {
