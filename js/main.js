@@ -342,8 +342,8 @@ jQuery( document ).ready(function($) {
 	// NO ! click - NO !! if you add touch AND click it will count twice for mobile !
     
 	// touch
-    $( document ).on( "touchstart mousedown", "#controls", function(e) { 
-//    $( document ).on( "touchstart", "#controls", function(e) {
+//    $( document ).on( "touchstart mousedown", "#controls", function(e) {
+    $( document ).on( "touchmove mousemove", "#controls", function(e) { 
 //    	console.log(e);
     	// mobile touch
     	if (e.originalEvent.touches != undefined)
