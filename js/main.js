@@ -415,7 +415,33 @@ jQuery( document ).ready(function($) {
 		$("#loadBar").width(400*percent);
 		$("#loadtext").html(""+percent+"%")
 	});
-    
+	
+	
+	//adMob
+    var admobid = {};
+    if( /(android)/i.test(navigator.userAgent) ) { // for android
+        admobid = {
+            banner: 'ca-app-pub-8955299241812232/4592992504', // or DFP format "/6253334/dfp_example_ad"
+//            interstitial: 'ca-app-pub-xxx/yyy'
+        };
+    } 
+//    else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+//        admobid = {
+//            banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+//            interstitial: 'ca-app-pub-xxx/kkk'
+//        };
+//    } else { // for windows phone
+//        admobid = {
+//            banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+//            interstitial: 'ca-app-pub-xxx/kkk'
+//        };
+//    }	
+    if( /(android)/i.test(navigator.userAgent) ) { 
+	    if(AdMob) AdMob.createBanner( {
+	        adId: admobid.banner, 
+	        position: AdMob.AD_POSITION.TOP_CENTER, 
+	        autoShow: true } );
+    }
 });
 
 function getQueryVariable(variable) {
