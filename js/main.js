@@ -288,7 +288,16 @@ jQuery( document ).ready(function($) {
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
             		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-
+//            	    if( /(android)/i.test(navigator.userAgent) ) { 
+            		    if(AdMob)
+        		    	{
+            		    	AdMob.createBanner( {            		        
+            		    		adId: 'ca-app-pub-8955299241812232/4592992504', 
+                		        position: AdMob.AD_POSITION.TOP_CENTER, 
+                		        autoShow: true } );
+            		    	$('#score').html('999');
+        		    	}
+//            	    }
                 }            	
         	}
           });
@@ -418,13 +427,13 @@ jQuery( document ).ready(function($) {
 	
 	
 	//adMob
-    var admobid = {};
-    if( /(android)/i.test(navigator.userAgent) ) { // for android
-        admobid = {
-            banner: 'ca-app-pub-8955299241812232/4592992504', // or DFP format "/6253334/dfp_example_ad"
-//            interstitial: 'ca-app-pub-xxx/yyy'
-        };
-    } 
+//    var admobid = {};
+//    if( /(android)/i.test(navigator.userAgent) ) { // for android
+//        admobid = {
+//            banner: 'ca-app-pub-8955299241812232/4592992504', // or DFP format "/6253334/dfp_example_ad"
+////            interstitial: 'ca-app-pub-xxx/yyy'
+//        };
+//    } 
 //    else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
 //        admobid = {
 //            banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
@@ -436,12 +445,12 @@ jQuery( document ).ready(function($) {
 //            interstitial: 'ca-app-pub-xxx/kkk'
 //        };
 //    }	
-    if( /(android)/i.test(navigator.userAgent) ) { 
-	    if(AdMob) AdMob.createBanner( {
-	        adId: admobid.banner, 
-	        position: AdMob.AD_POSITION.TOP_CENTER, 
-	        autoShow: true } );
-    }
+//    if( /(android)/i.test(navigator.userAgent) ) { 
+//	    if(AdMob) AdMob.createBanner( {
+//	        adId: admobid.banner, 
+//	        position: AdMob.AD_POSITION.TOP_CENTER, 
+//	        autoShow: true } );
+//    }
 });
 
 function getQueryVariable(variable) {
