@@ -24,5 +24,7 @@
     <feature name="http://api.phonegap.com/1.0/notification"/>
 
  	<preference name="orientation" value="landscape" />
+ 	
+ 	<gap:plugin name="com.admob.google" source="plugins.cordova.io" /> 
  
 </widget>
