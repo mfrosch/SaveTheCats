@@ -211,7 +211,7 @@ jQuery( document ).ready(function($) {
     // catInitTick
     var catInitTick = 1000;
     var catTickDecrease = 25;
-    var catTickMin = 200;
+    var catTickMin = 500;
     
     var catid = 0;
 
