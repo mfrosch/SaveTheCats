@@ -289,16 +289,16 @@ jQuery( document ).ready(function($) {
                 	gameOver = true; 
             		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
 //            	    if( /(android)/i.test(navigator.userAgent) ) {
-//            			$('#score').html('111');
-//            		    if(AdMob)
-//        		    	{
-//            		    	$('#score').html('222');
-//            		    	AdMob.createBanner( {            		        
-//            		    		adId: 'ca-app-pub-8955299241812232/4592992504', 
-//                		        position: AdMob.AD_POSITION.TOP_CENTER, 
-//                		        autoShow: true } );
-//            		    	$('#score').html('999');
-//        		    	}
+            			$('#score').html('111');
+            		    if(AdMob)
+        		    	{
+            		    	$('#score').html('222');
+            		    	AdMob.createBanner( {            		        
+            		    		adId: 'ca-app-pub-8955299241812232/4592992504', 
+                		        position: AdMob.AD_POSITION.TOP_CENTER, 
+                		        autoShow: true } );
+            		    	$('#score').html('999');
+        		    	}
 //            	    }
                 }            	
         	}
