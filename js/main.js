@@ -288,7 +288,7 @@ jQuery( document ).ready(function($) {
                 	// ONLY FOR DEV REMOVE
                 	gameOver = true; 
             		$('#playground').append('<div id="welcomeScreen"><div id="restart"><br><br><center>restart</center></div></div>');// DEV
-//            	    if( /(android)/i.test(navigator.userAgent) ) {
+            	    if( /(android)/i.test(navigator.userAgent) ) {
             			$('#score').html('111');
             		    if(AdMob)
         		    	{
@@ -299,7 +299,7 @@ jQuery( document ).ready(function($) {
                 		        autoShow: true } );
             		    	$('#score').html('999');
         		    	}
-//            	    }
+            	    }
                 }            	
         	}
           });
