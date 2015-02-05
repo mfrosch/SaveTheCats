@@ -296,7 +296,17 @@ jQuery( document ).ready(function($) {
                 		        position: AdMob.AD_POSITION.TOP_CENTER, 
                 		        autoShow: true } );
         		    	}
-            	    }
+            	    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+
+        	        } else { // windows
+            		    if(AdMob)
+        		    	{
+            		    	AdMob.createBanner( {            		        
+            		    		adId: 'ca-app-pub-8955299241812232/4592992504', 
+                		        position: AdMob.AD_POSITION.TOP_CENTER, 
+                		        autoShow: true } );
+        		    	}
+        	        }
                 }            	
         	}
           });
