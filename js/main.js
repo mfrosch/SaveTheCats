@@ -302,7 +302,7 @@ jQuery( document ).ready(function($) {
             		    if(AdMob)
         		    	{
             		    	AdMob.createBanner( {            		        
-            		    		adId: 'ca-app-pub-8955299241812232/4592992504', 
+            		    		adId: 'ca-app-pub-8955299241812232/9389792106', 
                 		        position: AdMob.AD_POSITION.TOP_CENTER, 
                 		        autoShow: true } );
         		    	}

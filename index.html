@@ -10,6 +10,45 @@
 		<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
 		<script src="js/jquery.gamequery-0.7.1.js" type="text/javascript"></script>
 		<script src="js/main.js" type="text/javascript"></script>
+		
+		<!-- BEGIN GOOGLE ANALYTICS CODEs -->
+		<script type="text/javascript">
+
+	    if( /(android)/i.test(navigator.userAgent) ) {
+			//<![CDATA[
+		    var _gaq = _gaq || [];
+		    
+		_gaq.push(['_setAccount', 'UA-59372233-2']);
+		_gaq.push(['_trackPageview']);
+		    
+		    (function() {
+		        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		    })();
+		
+		//]]>
+		
+	    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+
+        } else { // windows
+			//<![CDATA[
+			    var _gaq = _gaq || [];
+			    
+			_gaq.push(['_setAccount', 'UA-59372233-3']);
+			_gaq.push(['_trackPageview']);
+			    
+			    (function() {
+			        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			    })();
+			
+			//]]>
+        }
+	    </script>
+		<!-- END GOOGLE ANALYTICS CODE -->		
+		
 	</head>
 	<body>
 		<div id="playground">
